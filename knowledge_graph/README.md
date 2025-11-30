@@ -85,7 +85,7 @@ knowledge_graph/
 
 ## Landing Page
 
-[Landing Page](imgs/1_landing_page.png)
+![Landing Page](imgs/1_landing_page.png)
 
 ## Features & Usage
 
@@ -105,11 +105,11 @@ Relationship: belongs_to
 Entity 2: Customer3
 ```
 
-[Add Relationship Manually](imgs/2_add_relationship.png)
+![Add Relationship Manually](imgs/2_add_relationship.png)
 
 Creates a directed relationship: `Laptop --[belongs_to]--> Electronics`
 
-[Relationship Added](imgs/3_add_relationship_after.png)
+![Relationship Added](imgs/3_add_relationship_after.png)
 
 ### 2. Bulk Upload CSV
 
@@ -122,23 +122,23 @@ Tablet,belongs_to,Electronics
 Electronics,managed_by,Amazon
 ```
 
-[Upload CSV Feature](imgs/7_upload_csv.png)
+![Upload CSV Feature](imgs/7_upload_csv.png)
 
 **Steps:**
 
 1. Click "Upload CSV File"
-   [Upload CSV File](imgs/8_upload_csv_selection.png)
+   ![Upload CSV File](imgs/8_upload_csv_selection.png)
 
 2. Select `data/sample_ecommerce.csv` or your own CSV
-   [CSV Selection](imgs/8_upload_csv_selection.png)
+   ![CSV Selection](imgs/8_upload_csv_selection.png)
 
 3. File must have columns: `entity1`, `relationship`, `entity2`
-   [CSV Selection After](imgs/9_upload_csv_selection_after.png)
+   ![CSV Selection After](imgs/9_upload_csv_selection_after.png)
 
 **Maximum file size:** 5MB
 
 4. Renders the Graph
-   [CSV Graph](imgs/10_upload_csv_results.png)
+   ![CSV Graph](imgs/10_upload_csv_results.png)
 
 ### 3. Query the Graph
 
@@ -151,8 +151,8 @@ Electronics,managed_by,Amazon
 
 **Example:** Query "Amazon" → Shows all products sold, categories managed, etc.
 
-[Find Neighbours](imgs/4_query_graph.png)
-[Find Neighbours](imgs/5_query_graph_results.png)
+![Find Neighbours](imgs/4_query_graph.png)
+![Find Neighbours](imgs/5_query_graph_results.png)
 
 **b) Find Path Between Entities**
 
@@ -189,7 +189,7 @@ Displays:
 - Total number of relationships
 - List of relationship types with counts
 
-[Graph Statistics](imgs/6_graph_statistics.png)
+![Graph Statistics](imgs/6_graph_statistics.png)
 
 ### 6. Export & Clear
 
