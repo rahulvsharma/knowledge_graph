@@ -59,7 +59,7 @@ Navigate to `http://localhost:5000` in your browser.
 ## Project Structure
 
 ```
-Part_A_Knowledge_Graph/
+knowledge_graph/
 ├── app/
 │   ├── __init__.py              # Flask application & API endpoints
 │   ├── knowledge_graph.py        # Graph logic using NetworkX
