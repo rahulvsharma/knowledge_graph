@@ -1,4 +1,14 @@
-# NLP Assignment 1 - PS 10: Knowledge Graph Application
+# NLP Assignment 1 - PS 10: Knowledge Graph Application - Part A
+
+### Group ID: 61
+
+### Group Members Name with Student ID:
+
+1. Arpita Singh (2024AA05027) Contribution 100%
+2. Rahul Sharma (2024AA05893) Contribution 100%
+3. Sachit Pandey (2024AA05023) Contribution 100%
+4. Avishek Ghatak (2024AA05895) Contribution 100%
+5. Anoushka Guleria () Contribution 100%
 
 ## Overview
 
