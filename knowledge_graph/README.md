@@ -1,8 +1,10 @@
-# Knowledge Graph Application for E-Commerce Networks
+# NLP Assignment 1 - PS 10: Knowledge Graph Application
 
 ## Overview
 
-A web-based Knowledge Graph application that enables users to build, visualize, and query entity-relationship networks for E-Commerce and other domains. Built with Flask backend, NetworkX graph processing, and D3.js visualization.
+A web-based Knowledge Graph application that allows users to input and visualize relationships between entities. The application offers a user-friendly interface to add relationships, query the graph, and display the results dynamically.
+
+Built with Flask backend, NetworkX graph processing, and D3.js visualization.
 
 **Features:**
 
@@ -36,7 +38,7 @@ The script will:
 1. Create a virtual environment
 2. Install all dependencies
 3. Start the Flask server
-4. Open http://localhost:5000
+4. Open http://localhost:8080
 
 **Manual startup:**
 
@@ -52,7 +54,7 @@ pip install -r requirements.txt
 python3 -m app.__init__
 ```
 
-Navigate to `http://localhost:5000` in your browser.
+Navigate to `http://localhost:8080` in your browser.
 
 ---
 
@@ -81,6 +83,10 @@ knowledge_graph/
 
 ---
 
+## Landing Page
+
+[Landing Page](imgs/1_landing_page.png)
+
 ## Features & Usage
 
 ### 1. Add Relationships Manually
@@ -94,12 +100,16 @@ knowledge_graph/
 **Example:**
 
 ```
-Entity 1: Laptop
+Entity 1: Product2
 Relationship: belongs_to
-Entity 2: Electronics
+Entity 2: Customer3
 ```
 
+[Add Relationship Manually](imgs/2_add_relationship.png)
+
 Creates a directed relationship: `Laptop --[belongs_to]--> Electronics`
+
+[Relationship Added](imgs/3_add_relationship_after.png)
 
 ### 2. Bulk Upload CSV
 
@@ -112,13 +122,23 @@ Tablet,belongs_to,Electronics
 Electronics,managed_by,Amazon
 ```
 
+[Upload CSV Feature](imgs/7_upload_csv.png)
+
 **Steps:**
 
 1. Click "Upload CSV File"
+   [Upload CSV File](imgs/8_upload_csv_selection.png)
+
 2. Select `data/sample_ecommerce.csv` or your own CSV
+   [CSV Selection](imgs/8_upload_csv_selection.png)
+
 3. File must have columns: `entity1`, `relationship`, `entity2`
+   [CSV Selection After](imgs/9_upload_csv_selection_after.png)
 
 **Maximum file size:** 5MB
+
+4. Renders the Graph
+   [CSV Graph](imgs/10_upload_csv_results.png)
 
 ### 3. Query the Graph
 
@@ -130,6 +150,9 @@ Electronics,managed_by,Amazon
 - Displays both incoming and outgoing relationships
 
 **Example:** Query "Amazon" → Shows all products sold, categories managed, etc.
+
+[Find Neighbours](imgs/4_query_graph.png)
+[Find Neighbours](imgs/5_query_graph_results.png)
 
 **b) Find Path Between Entities**
 
@@ -165,6 +188,8 @@ Displays:
 - Total number of entities
 - Total number of relationships
 - List of relationship types with counts
+
+[Graph Statistics](imgs/6_graph_statistics.png)
 
 ### 6. Export & Clear
 
@@ -471,144 +496,6 @@ See `docs/ENHANCEMENT_PLAN.md` for:
 
 ---
 
-## Troubleshooting
-
-### Application won't start
-
-```bash
-# Check Python version
-python3 --version  # Must be 3.7+
-
-# Verify all dependencies
-pip list | grep -E "Flask|NetworkX|pandas"
-
-# Check port 5000 availability
-lsof -i :5000
-```
-
-### CSV upload fails
-
-```
-Check CSV format:
-- Must have columns: entity1, relationship, entity2
-- No special characters in entity names (except spaces)
-- File size < 5MB
-```
-
-### Visualization not showing
-
-```bash
-# Clear browser cache (Ctrl+Shift+Delete or Cmd+Shift+Delete)
-# Check browser console for errors (F12)
-# Verify D3.js loaded (check Network tab)
-```
-
-### Slow performance
-
-```bash
-# Clear graph if too large (> 10K relationships)
-# Use Chrome DevTools to check:
-  - Network tab for slow requests
-  - Performance tab for rendering issues
-```
-
----
-
-## Development
-
-### Adding New Features
-
-**Add a new query type:**
-
-1. Add method in `app/knowledge_graph.py`
-2. Create API endpoint in `app/__init__.py`
-3. Add UI controls in `app/templates/index.html`
-4. Implement frontend logic in `app/static/js/app.js`
-
-**Add new relationship types:**
-Simply input in UI or CSV - no code changes needed
-
-### Running Tests
-
-```bash
-# Create test file
-python3 -m pytest tests/
-
-# Test specific endpoint
-curl -X POST http://localhost:5000/api/graph/add-relationship \
-  -H "Content-Type: application/json" \
-  -d '{"entity1":"A","relationship":"rel","entity2":"B"}'
-```
-
----
-
-## Deployment
-
-### Docker Deployment
-
-```dockerfile
-FROM python:3.9-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app.__init__"]
-```
-
-### Cloud Deployment (AWS/GCP/Azure)
-
-- Use managed Flask hosting
-- Set environment variables for production
-- Configure persistent storage
-- Enable CORS properly
-
----
-
-## Security Considerations
-
-### Current Implementation
-
-⚠️ **For development/demo only**
-
-### For Production
-
-- Add authentication (JWT/OAuth)
-- Implement HTTPS
-- Add input validation
-- Sanitize user inputs
-- Rate limiting on API endpoints
-- CORS configuration
-
-See `docs/ENHANCEMENT_PLAN.md` for security enhancements.
-
----
-
-## Contributing
-
-### Reporting Issues
-
-Submit bugs with:
-
-- Steps to reproduce
-- Expected vs actual behavior
-- Browser/OS information
-
-### Feature Requests
-
-Describe:
-
-- Use case
-- Expected functionality
-- Mock-ups/examples
-
----
-
-## License
-
-This project is part of an academic assignment for BITS SEM3 NLPAPPS course.
-
----
-
 ## Support
 
 ### Documentation
@@ -623,34 +510,3 @@ This project is part of an academic assignment for BITS SEM3 NLPAPPS course.
 - **Upload Demo Data:** Use sample CSV
 - **Learn Queries:** Try each query type
 - **Explore Graph:** Drag nodes in visualization
-
----
-
-## Assignment Submission
-
-### Part A - Implementation ✓
-
-- [x] Frontend Development (3 marks)
-- [x] Graph Management & Querying (3 marks)
-- [x] Integration (2 marks)
-
-### Part B - Enhancement Plan ✓
-
-- [x] Scalability Strategy (2 marks)
-- [x] Documentation: `docs/ENHANCEMENT_PLAN.md`
-
-**Total:** 10 marks
-
----
-
-## Next Steps
-
-1. **Start the application:** `./run.sh`
-2. **Upload sample data:** Use `data/sample_ecommerce.csv`
-3. **Explore features:** Try each query type
-4. **Review enhancement plan:** `docs/ENHANCEMENT_PLAN.md`
-5. **Extend functionality:** See "Development" section
-
----
-
-**Happy exploring with your Knowledge Graph! 🚀**
