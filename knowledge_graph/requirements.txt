@@ -1,0 +1,7 @@
+Flask==3.0.0
+Flask-CORS==4.0.0
+NetworkX==3.1
+pandas==2.1.4
+numpy==1.26.4
+python-dotenv==1.0.0
+Werkzeug==3.0.1

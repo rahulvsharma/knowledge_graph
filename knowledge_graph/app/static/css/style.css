@@ -1,0 +1,557 @@
+/* ========================
+   GENERAL STYLES
+   ======================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.container {
+  max-width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================
+   HEADER
+   ======================== */
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  font-size: 2.5em;
+  margin-bottom: 5px;
+}
+
+.header p {
+  font-size: 1em;
+  opacity: 0.9;
+}
+
+/* ========================
+   MAIN LAYOUT
+   ======================== */
+
+.main-content {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 380px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.content {
+  flex: 1;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ========================
+   SECTIONS
+   ======================== */
+
+.section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.section h2 {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  color: #667eea;
+}
+
+/* ========================
+   FORM ELEMENTS
+   ======================== */
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9em;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.95em;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-field::placeholder {
+  color: #aaa;
+}
+
+small {
+  display: block;
+  margin-top: 5px;
+  color: #999;
+  font-size: 0.85em;
+}
+
+select.input-field {
+  cursor: pointer;
+}
+
+/* ========================
+   DATALIST STYLING
+   ======================== */
+
+input[list] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+}
+
+datalist {
+  position: absolute;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+datalist option {
+  padding: 8px 10px;
+  cursor: pointer;
+  background: white;
+}
+
+datalist option:hover {
+  background: #f0f0f0;
+}
+
+datalist option:focus {
+  background: #667eea;
+  color: white;
+}
+
+/* ========================
+   BUTTONS
+   ======================== */
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 10px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+  background: #48bb78;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #38a169;
+  transform: translateY(-2px);
+}
+
+.btn-success {
+  background: #667eea;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+.btn-info {
+  background: #0ea5e9;
+  color: white;
+}
+
+.btn-info:hover {
+  background: #0284c7;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* ========================
+   STATUS MESSAGES
+   ======================== */
+
+.status-message {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.85em;
+  min-height: 20px;
+}
+
+.status-success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+
+.status-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+.status-info {
+  background: #dbeafe;
+  color: #0c2340;
+  border: 1px solid #93c5fd;
+}
+
+/* ========================
+   STATISTICS
+   ======================== */
+
+.stats-box {
+  background: #f7fafc;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 4px solid #667eea;
+}
+
+.stats-box p {
+  margin: 8px 0;
+  font-size: 0.95em;
+}
+
+.stats-box span {
+  font-weight: 700;
+  color: #667eea;
+}
+
+/* ========================
+   TABS
+   ======================== */
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #eee;
+  background: #f9fafb;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #999;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-btn.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.tab-btn:hover {
+  color: #667eea;
+}
+
+/* ========================
+   TAB CONTENT
+   ======================== */
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ========================
+   GRAPH VISUALIZATION
+   ======================== */
+
+#graph-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #667eea;
+  stroke: #764ba2;
+  stroke-width: 2px;
+  transition: all 0.3s;
+}
+
+.node text {
+  font-size: 12px;
+  pointer-events: none;
+  text-anchor: middle;
+  dy: ".3em";
+  fill: #333;
+}
+
+.node:hover circle {
+  fill: #764ba2;
+  r: 20;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: 0.6;
+  stroke-width: 2px;
+  marker-end: url(#arrowhead);
+}
+
+.link-label {
+  font-size: 10px;
+  fill: #666;
+  pointer-events: none;
+  background: white;
+  padding: 2px 4px;
+}
+
+svg {
+  background: white;
+}
+
+/* ========================
+   RESULTS DISPLAY
+   ======================== */
+
+#results-container {
+  padding: 20px;
+  min-height: 200px;
+  background: white;
+}
+
+.result-item {
+  background: #f9fafb;
+  border-left: 4px solid #667eea;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.result-title {
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.result-content {
+  font-size: 0.9em;
+  line-height: 1.8;
+  color: #555;
+}
+
+.result-content h4 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.95em;
+}
+
+.result-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.result-content li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  padding-left: 10px;
+}
+
+.path-item {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-size: 0.85em;
+  overflow-x: auto;
+}
+
+/* ========================
+   SCROLLBARS
+   ======================== */
+
+.sidebar::-webkit-scrollbar,
+.tab-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.tab-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.tab-content::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.tab-content::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
+}
+
+/* ========================
+   RESPONSIVE DESIGN
+   ======================== */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 320px;
+  }
+
+  .header h1 {
+    font-size: 1.8em;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: 40vh;
+  }
+
+  .content {
+    min-height: 60vh;
+  }
+
+  .header h1 {
+    font-size: 1.5em;
+  }
+
+  .header p {
+    font-size: 0.85em;
+  }
+}
+
+/* ========================
+   ANIMATIONS
+   ======================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-item {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
