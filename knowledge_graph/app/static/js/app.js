@@ -39,6 +39,27 @@ document.addEventListener("DOMContentLoaded", function () {
   loadGraphData();
   updateStats();
   setupD3Visualization();
+  // Initialize MDC components (text fields & ripples)
+  if (window.mdc) {
+    // Text fields
+    document.querySelectorAll(".mdc-text-field").forEach((el) => {
+      try {
+        new mdc.textField.MDCTextField(el);
+      } catch (e) {}
+    });
+    // Buttons: add ripple effect
+    document.querySelectorAll(".btn").forEach((btn) => {
+      try {
+        // new mdc.ripple.MDCRipple(btn);
+      } catch (e) {}
+    });
+    // Selects
+    document.querySelectorAll(".mdc-select").forEach((el) => {
+      try {
+        new mdc.select.MDCSelect(el);
+      } catch (e) {}
+    });
+  }
 });
 
 function initializeEventListeners() {
@@ -75,6 +96,21 @@ function initializeEventListeners() {
   document
     .getElementById("entity2")
     .addEventListener("input", handleEntity2Change);
+
+  // File input trigger (custom button)
+  const uploadTrigger = document.getElementById("uploadTriggerBtn");
+  const csvInput = document.getElementById("csvFile");
+  if (uploadTrigger && csvInput) {
+    uploadTrigger.addEventListener("click", () => csvInput.click());
+    csvInput.addEventListener("change", (e) => {
+      const nameSpan = document.getElementById("csvFileName");
+      if (csvInput.files && csvInput.files.length > 0) {
+        nameSpan.textContent = csvInput.files[0].name;
+      } else {
+        nameSpan.textContent = "No file chosen";
+      }
+    });
+  }
 
   // Enter key in input fields
   document
@@ -120,9 +156,10 @@ async function addRelationship() {
 
     if (data.status === "success") {
       showStatus(statusDiv, data.message, "success");
-      document.getElementById("entity1").value = "";
-      document.getElementById("relationship").value = "";
-      document.getElementById("entity2").value = "";
+      // Clear fields and update floating labels
+      setTextFieldValue("entity1", "");
+      setTextFieldValue("relationship", "");
+      setTextFieldValue("entity2", "");
       loadGraphData();
       updateStats();
     } else {
@@ -137,6 +174,26 @@ async function addRelationship() {
 // AUTO-FILL EXAMPLE HANDLERS
 // ============================================
 
+// Helper to set value on MDC text fields and float label when programmatically updating
+function setTextFieldValue(inputId, value) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.value = value;
+
+  // If using MDC filled textfield, ensure floating label floats
+  const tf = input.closest(".mdc-text-field");
+  if (tf) {
+    const label = tf.querySelector(".mdc-floating-label");
+    if (label) {
+      if (value && value.length > 0) {
+        label.classList.add("mdc-floating-label--float-above");
+      } else {
+        label.classList.remove("mdc-floating-label--float-above");
+      }
+    }
+  }
+}
+
 function handleEntity1Change() {
   const entity1Input = document.getElementById("entity1");
   const relationshipInput = document.getElementById("relationship");
@@ -148,9 +205,9 @@ function handleEntity1Change() {
   );
 
   if (example) {
-    // Auto-fill relationship and entity2
-    relationshipInput.value = example.relationship;
-    entity2Input.value = example.entity2;
+    // Auto-fill relationship and entity2 (and float labels)
+    setTextFieldValue("relationship", example.relationship);
+    setTextFieldValue("entity2", example.entity2);
   }
 }
 
@@ -167,8 +224,8 @@ function handleRelationshipChange() {
   );
 
   if (example) {
-    // Auto-fill entity2
-    entity2Input.value = example.entity2;
+    // Auto-fill entity2 (and float label)
+    setTextFieldValue("entity2", example.entity2);
   }
 }
 
@@ -526,7 +583,7 @@ function updateVisualization() {
   node
     .append("text")
     .text((d) => d.label)
-    .attr("font-size", "12px")
+    .attr("font-size", "14px")
     .attr("text-anchor", "middle");
 
   // Update positions on simulation tick

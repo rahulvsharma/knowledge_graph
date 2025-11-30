@@ -8,34 +8,48 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+    <!-- Inter font for Gemini-like look -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Components Web (minimal) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@14.0.0/dist/material-components-web.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@14.0.0/dist/material-components-web.min.js"></script>
   </head>
   <body>
     <div class="container">
-      <!-- Header -->
-      <header class="header">
-        <h1>🔗 Knowledge Graph Application</h1>
-        <p>
-          Build and visualize entity-relationship networks for E-Commerce and
-          beyond
-        </p>
-      </header>
+      <!-- Header moved into sidebar for compact left-aligned layout -->
 
       <div class="main-content">
         <!-- Left Sidebar - Controls -->
         <aside class="sidebar">
+          <div class="sidebar-header">
+            <h1 class="app-title">🔗 Knowledge Graph</h1>
+            <p class="app-sub">Visualize entity-relationship networks</p>
+          </div>
           <div class="section">
             <h2>Add Relationships</h2>
 
             <div class="form-group">
               <label for="entity1">Entity 1:</label>
-              <input
-                type="text"
-                id="entity1"
-                placeholder="e.g., Laptop"
-                class="input-field"
-                list="entity1Examples"
-              />
+              <label
+                class="mdc-text-field mdc-text-field--filled"
+                style="width: 100%"
+              >
+                <input
+                  class="mdc-text-field__input"
+                  type="text"
+                  id="entity1"
+                  list="entity1Examples"
+                  placeholder=" "
+                />
+                <span class="mdc-floating-label">Entity 1</span>
+              </label>
               <datalist id="entity1Examples">
                 <option value="Laptop"></option>
                 <option value="Tablet"></option>
@@ -52,13 +66,19 @@
 
             <div class="form-group">
               <label for="relationship">Relationship:</label>
-              <input
-                type="text"
-                id="relationship"
-                placeholder="e.g., belongs_to"
-                class="input-field"
-                list="relationshipExamples"
-              />
+              <label
+                class="mdc-text-field mdc-text-field--filled"
+                style="width: 100%"
+              >
+                <input
+                  class="mdc-text-field__input"
+                  type="text"
+                  id="relationship"
+                  list="relationshipExamples"
+                  placeholder=" "
+                />
+                <span class="mdc-floating-label">Relationship</span>
+              </label>
               <datalist id="relationshipExamples">
                 <option value="belongs_to"></option>
                 <option value="is_a"></option>
@@ -79,13 +99,19 @@
 
             <div class="form-group">
               <label for="entity2">Entity 2:</label>
-              <input
-                type="text"
-                id="entity2"
-                placeholder="e.g., Electronics"
-                class="input-field"
-                list="entity2Examples"
-              />
+              <label
+                class="mdc-text-field mdc-text-field--filled"
+                style="width: 100%"
+              >
+                <input
+                  class="mdc-text-field__input"
+                  type="text"
+                  id="entity2"
+                  list="entity2Examples"
+                  placeholder=" "
+                />
+                <span class="mdc-floating-label">Entity 2</span>
+              </label>
               <datalist id="entity2Examples">
                 <option value="Laptop"></option>
                 <option value="Tablet"></option>
@@ -119,9 +145,28 @@
                 type="file"
                 id="csvFile"
                 accept=".csv"
-                class="input-field"
+                style="display: none"
               />
-              <small>Format: entity1, relationship, entity2</small>
+              <button
+                id="uploadTriggerBtn"
+                class="btn btn-secondary"
+                type="button"
+              >
+                Choose CSV File
+              </button>
+              <span
+                id="csvFileName"
+                style="
+                  margin-left: 10px;
+                  color: var(--md-muted);
+                  font-size: 0.95em;
+                "
+                >No file chosen</span
+              >
+              <small
+                style="display: block; margin-top: 8px; color: var(--md-muted)"
+                >Format: entity1, relationship, entity2</small
+              >
             </div>
             <button id="uploadBtn" class="btn btn-secondary">Upload CSV</button>
             <div id="uploadStatus" class="status-message"></div>
@@ -133,31 +178,73 @@
 
             <div class="form-group">
               <label for="queryEntity">Entity Name:</label>
-              <input
-                type="text"
-                id="queryEntity"
-                placeholder="Search entity"
-                class="input-field"
-              />
+              <label
+                class="mdc-text-field mdc-text-field--filled"
+                style="width: 100%"
+              >
+                <input
+                  class="mdc-text-field__input"
+                  type="text"
+                  id="queryEntity"
+                  placeholder=" "
+                />
+                <span class="mdc-floating-label">Entity Name</span>
+              </label>
             </div>
 
             <div class="form-group">
               <label for="queryType">Query Type:</label>
-              <select id="queryType" class="input-field">
-                <option value="neighbors">Find Neighbors</option>
-                <option value="path">Find Path To Entity</option>
-                <option value="relationship">Search by Relationship</option>
-              </select>
+              <div class="mdc-select mdc-select--filled" style="width: 100%">
+                <div class="mdc-select__anchor">
+                  <span class="mdc-select__selected-text-container">
+                    <span
+                      id="queryTypeSelected"
+                      class="mdc-select__selected-text"
+                    ></span>
+                  </span>
+                  <span class="mdc-select__dropdown-icon">
+                    <svg
+                      class="mdc-select__dropdown-icon-graphic"
+                      viewBox="7 10 10 5"
+                      focusable="false"
+                    >
+                      <polygon
+                        class="mdc-select__dropdown-icon-inactive"
+                        stroke="none"
+                        fill-rule="evenodd"
+                        points="7 10 12 15 17 10"
+                      ></polygon>
+                      <polygon
+                        class="mdc-select__dropdown-icon-active"
+                        stroke="none"
+                        fill-rule="evenodd"
+                        points="7 15 12 10 17 15"
+                      ></polygon>
+                    </svg>
+                  </span>
+                </div>
+                <select id="queryType" class="mdc-select__native-control">
+                  <option value="neighbors">Find Neighbors</option>
+                  <option value="path">Find Path To Entity</option>
+                  <option value="relationship">Search by Relationship</option>
+                </select>
+              </div>
             </div>
 
             <div class="form-group" id="pathTargetDiv" style="display: none">
               <label for="pathTarget">Target Entity:</label>
-              <input
-                type="text"
-                id="pathTarget"
-                placeholder="Target entity"
-                class="input-field"
-              />
+              <label
+                class="mdc-text-field mdc-text-field--filled"
+                style="width: 100%"
+              >
+                <input
+                  class="mdc-text-field__input"
+                  type="text"
+                  id="pathTarget"
+                  placeholder=" "
+                />
+                <span class="mdc-floating-label">Target Entity</span>
+              </label>
             </div>
 
             <button id="queryBtn" class="btn btn-success">Execute Query</button>

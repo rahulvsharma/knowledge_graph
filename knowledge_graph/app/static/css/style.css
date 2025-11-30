@@ -9,10 +9,14 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    180deg,
+    #0f172a 0%,
+    #07101a 100%
+  ); /* dark Gemini-like backing */
   min-height: 100vh;
-  color: #333;
+  color: #e6eef6; /* soft light text */
 }
 
 .container {
@@ -22,12 +26,61 @@ body {
   flex-direction: column;
 }
 
+/* Foreground / text contrast helpers */
+:root {
+  --fg: #e6eef6;
+  --fg-strong: rgba(230, 238, 246, 0.97);
+  --fg-medium: rgba(230, 238, 246, 0.85);
+  --fg-muted: rgba(230, 238, 246, 0.65);
+}
+
+/* Set readable colors for basic controls and text */
+input[type="text"],
+input[type="file"],
+textarea,
+select,
+.mdc-text-field__input,
+.mdc-select__selected-text,
+.status-message,
+.form-group,
+.form-group label,
+.tab-btn,
+.result-content,
+.result-item,
+.stats-box,
+.sidebar,
+.content {
+  color: var(--fg-strong);
+}
+
+::placeholder {
+  color: var(--fg-muted);
+}
+
+/* Ensure MDC inputs inherit readable color */
+.mdc-text-field__input,
+.mdc-text-field .mdc-floating-label,
+.mdc-select__selected-text,
+input[type="text"],
+textarea,
+select {
+  color: var(--fg-strong);
+}
+
+.mdc-text-field {
+  background: transparent;
+}
+
 /* ========================
    HEADER
    ======================== */
 
 .header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    135deg,
+    var(--md-primary-light) 0%,
+    var(--md-primary) 100%
+  );
   color: white;
   padding: 20px;
   text-align: center;
@@ -52,24 +105,50 @@ body {
   display: flex;
   flex: 1;
   gap: 20px;
-  padding: 20px;
+  padding: 12px;
   overflow: hidden;
 }
 
 .sidebar {
   width: 380px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
   overflow-y: auto;
-  padding: 20px;
+  padding: 18px;
+}
+
+/* Compact header inside the sidebar for left-aligned layout */
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.sidebar-header .app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--md-primary);
+}
+.sidebar-header .app-sub {
+  font-size: 0.85rem;
+  color: var(--fg-medium);
+  margin-top: -2px;
 }
 
 .content {
   flex: 1;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -93,7 +172,7 @@ body {
 .section h2 {
   font-size: 1.2em;
   margin-bottom: 15px;
-  color: #667eea;
+  color: var(--md-primary);
 }
 
 /* ========================
@@ -108,7 +187,7 @@ body {
   display: block;
   margin-bottom: 5px;
   font-weight: 600;
-  color: #333;
+  color: rgba(230, 238, 246, 0.9);
   font-size: 0.9em;
 }
 
@@ -123,8 +202,8 @@ body {
 
 .input-field:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--md-primary);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.08);
 }
 
 .input-field::placeholder {
@@ -147,7 +226,7 @@ select.input-field {
    ======================== */
 
 input[list] {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230d9488' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
   padding-right: 28px;
@@ -155,9 +234,13 @@ input[list] {
 
 datalist {
   position: absolute;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
@@ -166,16 +249,33 @@ datalist {
 datalist option {
   padding: 8px 10px;
   cursor: pointer;
-  background: white;
+  background: transparent;
 }
 
 datalist option:hover {
-  background: #f0f0f0;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 datalist option:focus {
-  background: #667eea;
+  background: var(--md-primary);
   color: white;
+}
+
+/* Ensure datalist and native select options are readable on dark background */
+datalist option,
+select option,
+option {
+  color: var(--fg-strong);
+  background: transparent;
+}
+
+/* Native select control and MDC select selected text */
+.mdc-select__native-control,
+.mdc-select__selected-text,
+select,
+.mdc-select__anchor {
+  color: var(--fg-strong) !important;
+  background: transparent !important;
 }
 
 /* ========================
@@ -195,13 +295,17 @@ datalist option:focus {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    135deg,
+    var(--md-primary-light) 0%,
+    var(--md-primary) 100%
+  );
   color: white;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.28);
 }
 
 .btn-secondary {
@@ -215,12 +319,12 @@ datalist option:focus {
 }
 
 .btn-success {
-  background: #667eea;
+  background: var(--md-primary);
   color: white;
 }
 
 .btn-success:hover {
-  background: #5568d3;
+  background: var(--md-primary-dark);
   transform: translateY(-2px);
 }
 
@@ -283,10 +387,15 @@ datalist option:focus {
    ======================== */
 
 .stats-box {
-  background: #f7fafc;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
   padding: 15px;
-  border-radius: 5px;
-  border-left: 4px solid #667eea;
+  border-radius: 6px;
+  border-left: 4px solid var(--md-primary);
+  color: var(--fg-strong);
 }
 
 .stats-box p {
@@ -296,7 +405,7 @@ datalist option:focus {
 
 .stats-box span {
   font-weight: 700;
-  color: #667eea;
+  color: var(--md-primary);
 }
 
 /* ========================
@@ -305,30 +414,30 @@ datalist option:focus {
 
 .tabs {
   display: flex;
-  border-bottom: 2px solid #eee;
-  background: #f9fafb;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  background: transparent;
 }
 
 .tab-btn {
   flex: 1;
-  padding: 15px;
+  padding: 12px 10px;
   border: none;
   background: none;
   cursor: pointer;
   font-size: 0.95em;
   font-weight: 600;
-  color: #999;
-  transition: all 0.3s;
+  color: var(--fg-medium);
+  transition: all 0.2s;
   border-bottom: 3px solid transparent;
 }
 
 .tab-btn.active {
-  color: #667eea;
-  border-bottom-color: #667eea;
+  color: var(--md-primary);
+  border-bottom-color: var(--md-primary);
 }
 
 .tab-btn:hover {
-  color: #667eea;
+  color: var(--md-primary);
 }
 
 /* ========================
@@ -352,7 +461,7 @@ datalist option:focus {
 
 #graph-container {
   width: 100%;
-  height: 100%;
+  height: 640px; /* make visualization prominent */
   position: relative;
 }
 
@@ -361,8 +470,8 @@ datalist option:focus {
 }
 
 .node circle {
-  fill: #667eea;
-  stroke: #764ba2;
+  fill: var(--md-primary);
+  stroke: var(--md-primary-dark);
   stroke-width: 2px;
   transition: all 0.3s;
 }
@@ -372,11 +481,11 @@ datalist option:focus {
   pointer-events: none;
   text-anchor: middle;
   dy: ".3em";
-  fill: #333;
+  fill: var(--fg-strong);
 }
 
 .node:hover circle {
-  fill: #764ba2;
+  fill: var(--md-primary-dark);
   r: 20;
 }
 
@@ -389,14 +498,16 @@ datalist option:focus {
 
 .link-label {
   font-size: 10px;
-  fill: #666;
+  fill: var(--fg-medium);
   pointer-events: none;
-  background: white;
-  padding: 2px 4px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 svg {
-  background: white;
+  background: transparent;
+  color: var(--fg-strong);
 }
 
 /* ========================
@@ -406,34 +517,42 @@ svg {
 #results-container {
   padding: 20px;
   min-height: 200px;
-  background: white;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.01),
+    rgba(255, 255, 255, 0)
+  );
 }
 
 .result-item {
-  background: #f9fafb;
-  border-left: 4px solid #667eea;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border-left: 4px solid var(--md-primary);
   padding: 15px;
   margin-bottom: 15px;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .result-title {
   font-weight: 700;
-  color: #667eea;
+  color: var(--md-primary);
   margin-bottom: 10px;
-  font-size: 1.1em;
+  font-size: 1.05em;
 }
 
 .result-content {
-  font-size: 0.9em;
-  line-height: 1.8;
-  color: #555;
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: rgba(230, 238, 246, 0.85);
 }
 
 .result-content h4 {
   margin-top: 12px;
   margin-bottom: 8px;
-  color: #333;
+  color: rgba(230, 238, 246, 0.9);
   font-size: 0.95em;
 }
 
@@ -444,16 +563,16 @@ svg {
 
 .result-content li {
   padding: 8px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
   padding-left: 10px;
 }
 
 .path-item {
-  background: white;
-  border: 1px solid #ddd;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 10px;
   margin: 8px 0;
-  border-radius: 4px;
+  border-radius: 6px;
   font-family: "Courier New", monospace;
   font-size: 0.85em;
   overflow-x: auto;
@@ -470,19 +589,19 @@ svg {
 
 .sidebar::-webkit-scrollbar-track,
 .tab-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: rgba(255, 255, 255, 0.01);
   border-radius: 10px;
 }
 
 .sidebar::-webkit-scrollbar-thumb,
 .tab-content::-webkit-scrollbar-thumb {
-  background: #667eea;
+  background: var(--md-primary);
   border-radius: 10px;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover,
 .tab-content::-webkit-scrollbar-thumb:hover {
-  background: #764ba2;
+  background: var(--md-primary-dark);
 }
 
 /* ========================
@@ -535,6 +654,139 @@ svg {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ========================
+   MATERIAL MINIMAL THEME OVERRIDES
+   Applies a Material-like minimal theme to inputs, buttons, tabs and panels
+   ======================== */
+
+:root {
+  /* Gemini-like palette */
+  --md-primary: #6c63ff; /* indigo */
+  --md-primary-light: #eef2ff; /* light indigo/soft */
+  --md-primary-dark: #3f3cff;
+  --md-on-primary: #ffffff;
+  --md-surface: #000000;
+  --md-surface-variant: #141449;
+  --md-outline: #e6e1ea;
+  --md-text: #1f1b24;
+  --md-muted: #6b6b6b;
+  --md-radius: 10px;
+  --md-elevation: 0 2px 6px rgba(16, 24, 40, 0.08);
+}
+
+/* Material header */
+.header {
+  background: var(--md-surface);
+  color: var(--md-text);
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--md-outline);
+}
+.header h1 {
+  color: var(--md-text);
+  font-weight: 600;
+}
+
+/* Sidebar and content surfaces */
+.sidebar,
+.content {
+  background: var(--md-surface);
+  border-radius: var(--md-radius);
+  box-shadow: var(--md-elevation);
+  border: 1px solid var(--md-outline);
+}
+
+/* Inputs: flat with underline and subtle label color */
+.input-field {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--md-outline);
+  padding: 12px 8px;
+  font-size: 0.95em;
+  border-radius: 0;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  color: var(--md-text);
+}
+.input-field:focus {
+  outline: none;
+  border-bottom: 2px solid var(--md-primary);
+  box-shadow: 0 4px 10px rgba(13, 148, 136, 0.08);
+}
+.form-group label {
+  color: var(--md-muted);
+  font-weight: 500;
+  font-size: 0.85em;
+}
+
+/* Buttons: Material minimal */
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.btn-primary,
+.btn.btn-primary {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.12);
+}
+.btn-secondary,
+.btn.btn-secondary {
+  background: transparent;
+  color: var(--md-primary);
+  border: 1px solid var(--md-outline);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Tab styling with indicator */
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--md-outline);
+  background: transparent;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  font-weight: 600;
+  color: var(--md-muted);
+  cursor: pointer;
+  border-radius: 8px;
+}
+.tab-btn.active {
+  color: var(--md-primary);
+  background: var(--md-surface-variant);
+  box-shadow: none;
+}
+
+/* Results surface tweaks */
+#results-container {
+  background: transparent;
+}
+.result-item {
+  border-left-color: var(--md-primary);
+  background: var(--md-surface-variant);
+}
+
+/* Small screens: reduce padding */
+@media (max-width: 768px) {
+  .input-field {
+    padding: 10px 6px;
+  }
+  .btn {
+    padding: 9px 12px;
   }
 }
 
