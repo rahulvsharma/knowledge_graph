@@ -16,7 +16,7 @@ While exploring recent work on large language models, one pattern became very cl
 
 From reviewing several papers and research over the past few years, We noticed that researchers started questioning the conventional wisdom around 2019-2020. Instead of just throwing bigger and bigger models at problems, they wondered: what if we gave these systems the ability to look things up? What if they could retrieve relevant information from a knowledge base and then use that information to generate better answers? This idea led to Retrieval-Augmented Generation (RAG).
 
-Think of it like the difference between asking someone who's read every book in the world (but whose training ended in 2020) versus giving someone access to a library and some research skills. The second person will probably give you better answers, especially for specialized topics or recent events.
+It’s like the difference between asking someone who has read every book up to 2020, versus asking someone who not only reads a lot but also has access to a library and can look things up on the spot. The second person will usually give more accurate answers, especially for recent or specialized topics.
 
 The core idea behind RAG is simple but powerful: combine information retrieval with text generation. When someone asks a question, the system first searches through available documents to find relevant information, then uses that information as context when generating an answer. This approach has been gaining significant traction recently because it addresses several problems that plague traditional language models.
 
