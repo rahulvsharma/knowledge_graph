@@ -471,6 +471,61 @@ The graph will populate with example E-Commerce relationships.
 
 ---
 
+## Design Choices
+
+### Technical Architecture
+
+1. **Flask Backend** -
+   Used for a simple, lightweight API layer. It’s easy to build and maintain, and its lower concurrency limits are acceptable for a demo project.
+
+2. **NetworkX for Graph Logic** -
+   Provides ready-made graph operations (neighbors, shortest paths, degree). This avoided writing graph algorithms manually.
+
+3. **REST API Structure** -
+   Each endpoint handles one job (add node, add edge, search, import), making the system easy to debug and extend.
+
+4. **In-Memory Storage**
+   Fast and ideal for interactive queries. Data resets on restart, which is acceptable for this educational prototype.
+
+5. **CSV Import Instead of Database** -
+   Allows non-technical users to prepare data easily. No database setup needed. Works best for small–medium CSV files.
+
+6. **JSON for Data Exchange** -
+   Frontend and backend communicate through simple JSON objects, keeping responses predictable and easy to render with D3.js.
+
+7. **Modular Repository Layout** -
+   Graph logic, API routes, and visualization files are separated, helping the team work independently and reducing code conflicts.
+
+8. **Basic Input Validation** -
+   Checks for missing nodes, duplicate edges, invalid CSV format, etc., preventing crashes and keeping graph data clean.
+
+### UI / UX Design Choices
+
+1. **Left Sidebar Layout** -
+   Keeps graph controls easy to access while giving maximum space to the visualization.
+
+2. **D3.js Force-Directed Layout** -
+   Automatically clusters related nodes and shows structure visually. Slightly heavy for very large graphs.
+
+3. **Node Size Based on Degree** -
+   Bigger nodes = more connections. This gives a quick visual sense of importance.
+
+4. **Dark Theme with Indigo Accent** -
+   Comfortable for long viewing and gives the interface a clean, modern look.
+
+5. **Drag, Zoom & Hover Interactions** -
+   Drag to reposition nodes, zoom to explore dense parts, hover to view labels without cluttering the screen.
+
+---
+
+### Challenges Faced
+
+- **Environment** setup in Virtual Lab
+- **PORT** exposed on server was not working for apis
+- **UI** styling of knowledge graph was tedius to adjust
+
+---
+
 ## Support
 
 ### Documentation
