@@ -12,7 +12,7 @@
 
 ## 1. Introduction and Context
 
-When we think about how modern AI assistants work, they seem incredibly capable - until you ask them something about last week's news, or a specific detail from a niche field. The problem is straightforward: these large language models are trained on data up to a certain point in time, and while they're good at synthesizing what they've learned, they can't really access new information or specialized knowledge on demand.
+While exploring recent work on large language models, one pattern became very clear to us: these models look extremely capable, but they still struggle the moment a question requires up-to-date, domain-specific, or factual information. The reason is simple - an LLM only knows what was in its training data. It can generate fluent answers, but it can’t automatically access new information or expert knowledge that wasn’t part of its training set.
 
 From reviewing several papers and research over the past few years, We noticed that researchers started questioning the conventional wisdom around 2019-2020. Instead of just throwing bigger and bigger models at problems, they wondered: what if we gave these systems the ability to look things up? What if they could retrieve relevant information from a knowledge base and then use that information to generate better answers? This idea led to Retrieval-Augmented Generation (RAG).
 
@@ -22,147 +22,115 @@ The core idea behind RAG is simple but powerful: combine information retrieval w
 
 ## 2. How RAG Actually Works: The Two-Stage Process
 
-RAG systems typically operate in two distinct phases. First comes retrieval. When you pose a question or query, the system searches through a collection of documents - could be Wikipedia, academic papers, company documents, whatever - to find passages that might be relevant. This is where the "retrieval" part comes in.
+RAG systems typically operate in two distinct phases. First comes retrieval. When you pose a question or query, the system searches through a collection of documents—could be Wikipedia, academic papers, company documents, whatever—to find passages that might be relevant. This is where the "retrieval" part comes in.
 
 The second phase is generation. Once relevant documents are found, they're fed into a language model along with your original question. The language model then generates an answer, ideally grounded in the retrieved information. This is the "augmented generation" part.
 
-What's clever about this approach is that it lets the retrieval system and the generation system work together. You're not trying to cram everything into a single massive model. Instead, you have specialized components doing what they do best.
+Its strength comes from letting retrieval and generation work together, so the system doesn’t depend on one huge model each part does what it’s best at.
 
-![RAG Flow](knowledge_graph/imgs/RAG_Flow.png)
+<img width="977" height="650" alt="image" src="https://github.com/user-attachments/assets/cd017043-c272-4c7a-a159-5234f4dcb1bd" />
 
 ### Early Development and Key Players
 
-Here's where it gets interesting. The most cited work in this space comes from Facebook AI Research around 2020. Lewis et al. (2020) presented what became the foundational RAG framework - and honestly, reading their paper, you can see why it stuck around. They paired a retriever (Dense Passage Retrieval or DPR) with BART, a sequence-to-sequence model. The real innovation wasn't just combining these pieces. It was showing that you could actually train the whole system end-to-end. That changed things.
+When we looked into how modern neural RAG systems evolved, one pattern became clear: a lot of the recent momentum came from Facebook AI Research around 2020, especially through DPR (Dense Passage Retrieval) and the RAG framework. A key milestone was the framework introduced by Lewis et al. (2020), which combined a DPR with a sequence-to-sequence generator (BART). The significance of this model was not only the pairing of retrieval and generation, but the fact that the entire system could be trained end-to-end allowing the retriever and generator to reinforce each other during learning.
 
-After that, the iterations kept coming. Izacard & Grave (2021) showed better ways to handle multiple retrieved documents with their FiD approach. Then RETRO integrated retrieval directly into transformer layers - not just as a preprocessing step, but baked into the model itself. More recently, Izacard et al. (2022) demonstrated Atlas, which trained a retriever and generator jointly from scratch on massive datasets. Each iteration was trying to solve a specific problem.
+Following the initial RAG framework, several refinements appeared. FiD (Izacard & Grave, 2021) introduced a more effective way to process multiple retrieved documents by encoding each one separately before combining the results. RETRO went a step further by integrating retrieval directly into the transformer architecture, rather than treating it as an external step. REALM (Guu et al., 2020) demonstrated that retrieval and language modeling could be learned together, grounding answers in factual sources. Later, Atlas (Izacard et al., 2022) showed that a retriever and generator could be jointly trained from scratch at scale, improving consistency across tasks.HyDE (Gao et al., 2023) introduced a clever idea where the model first generates a hypothetical answer and uses it as the retrieval query, improving search accuracy in RAG systems. Each of these models targeted a different limitation in earlier approaches.
+
+<img width="2226" height="454" alt="image" src="https://github.com/user-attachments/assets/1a79a566-0020-47d5-bf7a-c847ed4f2de6" />
+
 
 ## 3. Different Approaches to Retrieval
 
-When you start looking into how systems actually find relevant documents, something becomes clear: there's no one-size-fits-all approach. Each method has tradeoffs.
+When we looked into how retrieval actually works in RAG systems, we realised there are several ways models can search for information, and each one comes with its own pros and cons.
 
-**Traditional keyword-based search** (BM25 and similar methods) has been around for decades. It works by matching keywords in your query to keywords in documents. Fast. No training required. And honestly? It's pretty reliable for straightforward queries. Where it falls apart is semantics. Ask "What's a four-wheeled vehicle?" and the document says "automobile," and keyword matching just... won't find it. Unless you manually program that mapping.
+Keyword-based retrieval (like BM25) is the classic method. It basically checks which documents contain the same words as our query. It’s fast, it doesn’t need training, and it works well for direct, literal questions. The downside is that it doesn’t understand meaning. For example, if the query says “four-wheeled vehicle” but the document says “automobile” keyword search won’t match them.
 
-**Dense retrieval** is the newer approach. Instead of keywords, both queries and documents become dense vectors - basically, long lists of numbers representing meaning. Semantically similar vectors end up close to each other mathematically. So you can find relevant documents even if they don't share exact keywords. Karpukhin et al. (2020) showed this actually works in practice. Trade-off? It requires training data and computational resources. Not nothing.
+Dense retrieval takes a more semantic approach. Instead of matching words, it converts queries and documents into numerical vectors that capture meaning. This lets it retrieve relevant information even when no keywords overlap.
+Karpukhin et al. (2020) showed that this works extremely well, but it does require model training and more compute.
 
-Recently, hybrid approaches have emerged. A hybrid system uses keyword matching to cast a wide net, then applies dense retrieval to rank results more intelligently. From what We've read, this tends to be more robust than either method alone. You get keyword speed plus semantic understanding.
+Hybrid retrieval is becoming popular because it mixes both ideas. Keyword search gives broad coverage, and dense retrieval ranks the results more intelligently. This tends to make retrieval more reliable across different types of queries.
 
-But here's something that's been shifting the landscape: large context windows. Models like GPT-4 now handle over 100,000 tokens. That changes the calculus. Instead of building sophisticated retrieval pipelines, you can just... stuff everything potentially relevant into the context. Let the model figure out what matters. It's less elegant. But it works.
+And then comes the new trend: large context windows. Some modern LLMs can handle huge inputs (tens of thousands of tokens), so instead of using a complex retrieval pipeline, many systems simply dump a lot of information into the context and let the model pick what matters. It’s not always efficient, but in many cases it works surprisingly well.
 
 ## 4. Real-World Applications and Why This Matters
 
-Why does this matter beyond academic curiosity? Because it's actually solving real problems right now.
+These ideas matter because retrieval‑augmented systems are already embedded in real products and workflows.
 
-**Question answering** systems are using this. Customer service bots retrieve relevant documentation and answer questions - they can cite sources, which is huge. One thing We noticed is that older systems would just hallucinate answers. With RAG, you have the documents right there.
+**Question answering** systems are using this. Customer-support bots look up relevant help articles and use them to answer questions, showing the exact source. Older LLM-only bots would sometimes make up answers, but retrieval keeps the response tied to real information.
 
-**Fact verification** is another area where this shines. Need to verify a claim? Retrieve evidence, then make a determination. The hallucination problem basically disappears when you're grounded in actual sources.
+**Fact verification** RAG is a natural fit. the system retrieves evidence first and then generates a judgment conditioned on that evidence. Hallucinations do not vanish completely, but they become easier to spot and reduce because the model is encouraged to stay close to retrieved sources instead of free‑associating.
 
-**Professional domains** jumped on this early. Legal teams use RAG to search case law and retrieve relevant precedents - Westlaw and LexisNexis are moving in this direction. Medical professionals ground clinical decision support in current research papers. A hospital in the US deployed a RAG system to help radiologists interpret scans by retrieving similar cases from their archive.
+**Professional domains** are also using this. Legal research tools use retrieval to find relevant case laws and then summarize them. Healthcare and biomedical assistants retrieve guidelines or research papers to support clinical decisions, and some hospital systems even retrieve similar historical cases to help interpret scans or patient reports. In such settings, the ability to show citations or supporting excerpts is essential
 
-The pattern is obvious. Accuracy matters. Traceability matters. With traditional LLMs, if something's wrong, you're stuck. With RAG, the source documents are visible. You can actually verify if the answer makes sense.
+Across all of these applications, the same pattern holds: accuracy and traceability are crucial. A stand-alone LLM may produce fluent answers, but a RAG system provides the underlying documents, making it easier for users to verify and trust the output
 
 ## 5. Current Challenges and Limitations
 
-Let's be honest. This technology isn't perfect.
+**Retrieval failures are still common.** When a query is phrased very differently from how the information is stored, the retriever can simply miss the right documents. This shows up repeatedly in recent work: systems need query reformulation, re‑ranking, and fallback strategies, yet retrieval errors remain a major failure mode.
 
-**Retrieval failures are still common.** One thing We noticed while reviewing papers is how often this issue comes up. If your query is worded differently from how information is stored, retrieval just fails silently. Researchers have tried workarounds - query reformulation, re-ranking, fallback strategies. But it's still a real problem. Still happens.
+**Context overload is real.** Retrieving several long documents often brings in contradictions, noise, or partially relevant content. The generator then has to decide what to trust, and it can latch onto the wrong passage or get confused by conflicting evidence.
 
-**Context overload is real.** Retrieve three long documents and they might contradict each other or be full of irrelevant details. The generator has to figure out what matters. Sometimes it picks the wrong thing. Gets confused.
+**There's latency overhead.** Every request triggers at least one retrieval step before generation, which adds extra network and compute cost. At production scale, with thousands of concurrent users, this impacts both response times and infrastructure spend.
 
-**There's latency overhead.** Every query needs a retrieval step before generation happens. That takes time. For production systems serving thousands of users simultaneously, this affects response time and costs add up.
+**Hallucinations still occur.** Even when the correct documents are retrieved, models can still generate details that aren't actually present in those sources. Current research is exploring ways to constrain generation or use reinforcement learning to keep models grounded, but this problem is far from fully solved.
 
-**Hallucinations still occur.** Even with retrieved context sitting right there, models can generate things not in those documents. We've seen it happen. There's research on constraining generation or using reinforcement learning to force models to stay grounded, but it's far from solved.
-
-**Knowledge updates sound easy but aren't.** Theoretically, you update documents without retraining - that's an advantage over fine-tuned systems. Practically? You need to maintain document quality, decide when to replace information versus preserve it for continuity, manage versions. It's more complex than it sounds.
+**Knowledge updates sound easy but aren't.** In theory, RAG lets us refresh information by simply updating the documents, no retraining needed. But in practice, we still have to maintain clean, consistent content, decide when outdated info should be replaced or kept for context, and manage document versions. So the actual process is more complicated than it seems.
 
 ## 6. Recent Trends and Where the Field Is Heading
 
 In reviewing recent work, a few patterns stand out.
 
-First, **intelligent, adaptive retrieval** is a major focus. Systems are learning to decide whether to retrieve at all. What to retrieve. How many documents. Some models generate intermediate reasoning steps that guide retrieval - multi-hop reasoning emerges naturally.
+First, **intelligent, adaptive retrieval** is a major focus. New systems do not just retrieve by default; they learn when to retrieve, what to retrieve, and how many documents are actually useful. Some models even generate intermediate reasoning steps that steer multi‑hop retrieval, so the retrieval process itself becomes part of the model’s reasoning loop
 
-**Multimodal RAG** is spreading. Systems can now retrieve and generate across text, images, tables. Visual question answering is becoming feasible. Document understanding across modalities.
+**Multimodal RAG** is spreading. Instead of working only over text, newer models can retrieve and condition on images, tables, and other structured content, making tasks like visual question answering and rich document understanding increasingly practical in real applications.
 
-**Reasoning-aware retrieval** is another area gaining traction. Different question types need different retrieval. A factual question needs factual documents. A reasoning question needs something else. Building systems that understand this distinction is active research.
+**Reasoning-aware retrieval** is another area gaining traction. Different questions demand different evidence: simple fact questions benefit from precise factual passages, while complex reasoning questions may require chains of documents or diverse perspectives. Current research is focused on teaching systems to recognize these differences and adapt their retrieval strategy accordingly.
 
-What's practical: **efficiency improvements are massive**. Lightweight models, approximate nearest neighbor algorithms, caching - these made RAG deployable at scale. Not just academic anymore. Actual production systems.
+On the engineering side **efficiency improvements are massive**. Lightweight models, approximate nearest‑neighbor search, and aggressive caching have made it realistic to deploy RAG systems at scale, not just in research prototypes but in production services that handle large query volumes.
 
-Then there's **end-to-end optimization**. Both retriever and generator trained together on task-specific data. This works better than training them separately. Borgeaud et al. (2021) and Izacard et al. (2022) showed this in their RETRO and Atlas papers.
+Then there's **end-to-end optimization**. Rather than training retrievers and generators separately, newer models train both components jointly on task‑specific data, which tends to produce better alignment between what is retrieved and how it is used. Work like RETRO (Borgeaud et al., 2021) and Atlas (Izacard et al., 2022) demonstrates the benefits of this kind of tightly coupled training.
 
-**_RAG (2023–2025)_**
+**Examples (2023–2025):**
 
-1.  Adaptive Retrieval Mechanisms
-
-    - Modern RAG systems now integrate dynamic retrieval control, allowing models to adjust retrieval depth and relevance based on query complexity.
-    - Examples include CTRLA (ACL 2025) and Reflective Tagging (Electronics 2024), which enable fine-grained control over retrieved content for better alignment with generation goals.
-
-2.  Hybrid Retrieval Strategies
-
-    - Combining dense and sparse retrieval (e.g., HyDE, multi-agent hybrid retrieval in KDD 2025) improves diversity and robustness, especially for large-scale deployments.
-    - These approaches reduce dependency on a single retrieval paradigm and enhance coverage for long-tail knowledge.
-
-3.  Multimodal RAG
-
-    - Emerging systems like MMORE (2025) and MIND-RAG (ICCV Workshop 2025) extend RAG beyond text, incorporating images, audio, and structured data for richer context.
-    - Applications include educational content generation, visual question answering, and cross-modal reasoning.
-
-4.  Integration with Large Context Windows
-
-    - With advancements in LLMs (e.g., GPT-4 Turbo, Gemini), RAG is being combined with extended context windows to reduce retrieval frequency while maintaining factual accuracy.
-
-5.  Efficiency and Scalability
-
-    - Techniques such as chunked retrieval (RETRO) and adaptive passage fusion (Atlas) are being optimized for low-latency, high-throughput environments, making RAG viable for real-time applications.
-
-6.  Reasoning-Aware Retrieval
-    - New research focuses on retrieval for multi-step reasoning tasks, where the retriever anticipates intermediate reasoning steps rather than just final answers.
+**Adaptive retrieval:** CTRLA (ACL 2025), Reflective Tagging (Electronics 2024).
+**Hybrid dense + sparse retrieval:** HyDE, multi‑agent hybrid retriever (KDD 2025).
+**Multimodal RAG:** MMORE (2025), MIND‑RAG (ICCV Workshop 2025).
+**Long‑context LLMs + RAG:** GPT‑4‑style and Gemini‑style systems with large context windows.
 
 ## 7. Comparison with Alternative Approaches
 
 How does RAG stack up against other approaches?
 
-**Fine-tuning** is traditional. Pretrain a model, then train it further on task-specific data. Works. But it's costly - lots of labeled data needed. And knowledge becomes static. Want to update? You retrain the whole thing.
+**Fine-tuning** is traditional: pretrain a model, then continue training it on task‑specific data. It can work very well, especially when we have high‑quality labeled examples and a fairly stable domain. The downsides are that it requires significant data and compute, and the knowledge it encodes is essentially static, updating facts usually means running another training cycle.
 
-RAG differs fundamentally. Knowledge updates are dynamic. Just update documents. No retraining. Trade-off: higher latency. Retrieval step on every query.
+RAG differs fundamentally. Its knowledge is updated in a live way: i.e we change or add documents in the index instead of retraining the model’s weights. The cost is extra delay, because every user query has to run a retrieval step before the model answers.
 
-**In-context prompting** (enabled by huge context windows in recent models) is conceptually similar. Instead of retrieving, dump everything relevant into the prompt. Simpler. Avoids retrieval failures. But wasteful - lots of unnecessary tokens. Models get distracted by noise.
+**In-context prompting** (enabled by huge context windows in recent models) is conceptually similar.  Instead of running a separate retrieval step,  all the potentially relevant material is put directly into the prompt. This is easier to set up and avoids some retrieval mistakes, but it wastes a lot of tokens and can overload the model with irrelevant text, which sometimes hurts answer quality.
 
-From what We've seen in practice, different situations need different solutions. Rapidly changing information? RAG. One-off questions with latency tolerance? RAG beats fine-tuning. Specialized domains with limited data? Fine-tuning might be better. The best systems probably mix approaches.
-
-![Comparison](knowledge_graph/imgs/ComparisonTable.png)
+In practice, the right method depends on the use case. When the underlying knowledge changes frequently (news, pricing, policies), RAG is usually a better fit because you can update the document index without retraining the model. For occasional, one-off questions where slightly higher latency is acceptable, RAG is often more practical than running a full fine‑tuning pipeline. In narrow, specialized domains with relatively stable knowledge and some high‑quality labeled data, fine‑tuning a model on that domain can give stronger performance. Many real systems therefore combine these ideas like, using RAG for freshness and coverage, and fine‑tuning to adapt the model’s style, tools, or reasoning to a specific domain.
 
 ## 8. Conclusion
 
-Retrieval-Augmented Generation is a practical solution to real problems in language models. Instead of building ever-larger models that memorize everything, it splits the work: specialized retrieval finds information, specialized generation produces text.
+Retrieval‑Augmented Generation is a practical way to address real weaknesses in language models. Instead of relying on larger models that try to memorize everything, it splits the work: specialized retrieval finds the information, and a generator turns that evidence into text.
 
-It's not experimental anymore. Major AI systems use RAG in production. Research keeps advancing - new retrieval techniques, better fusion methods, end-to-end training. Lewis et al. (2020) started this trajectory. The field has only grown.
+RAG is no longer just an experiment; major AI systems now use it in production, and research continues to push it forward with new retrieval methods, better fusion strategies, and more end‑to‑end training setups. Work like Lewis et al. (2020) helped define the modern RAG framework, and the ecosystem around it has grown rapidly since then.
 
-The advantages are clear. Answers ground in sources. Knowledge updates without retraining. Better scaling for specialized domains. Tradeoffs exist too - complexity, latency, and retrieval quality matters. But the tradeoffs are worth it.
+Its strengths are clear: answers can be grounded in explicit sources, knowledge can be updated without retraining model weights, and it scales well to specialized domains when paired with good corpora. The trade‑offs-extra system complexity, latency from retrieval, and sensitivity to retrieval quality are real, but in many applications they are a worthwhile price for greater accuracy, transparency, and control.
 
 ## References
 
-Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. _Advances in Neural Information Processing Systems_,
+Lewis, P., Perez, E., Piktus, A., Schwenk, H., Schwab, D., & Riedel, S. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. _Advances in Neural Information Processing Systems_, 33, 9459-9474. https://arxiv.org/abs/2005.11401
 
-- Lewis, P., Perez, E., Piktus, A., Schwenk, H., Schwab, D., & Riedel, S. (2020). 33, 9459-9474. https://arxiv.org/abs/2005.11401
+Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., & Schwenk, H. (2020). Dense Passage Retrieval for Open-Domain Question Answering. _arXiv preprint arXiv:2004.04906_. https://arxiv.org/abs/2004.04906 | GitHub: https://github.com/facebookresearch/DPR
 
-Dense Passage Retrieval for Open-Domain Question Answering. _arXiv preprint arXiv:2004.04906_.
+Izacard, G., & Grave, E. (2021). Leveraging Passage Retrieval to Answer Open-Domain Questions. _arXiv preprint arXiv:2107.06373_. https://arxiv.org/abs/2107.06373 | Published in EMNLP 2021
 
-- Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., & Schwenk, H. (2020). https://arxiv.org/abs/2004.04906
-- GitHub: https://github.com/facebookresearch/DPR
+Borgeaud, S., Mensch, A., Hoffmann, J., Cai, T., Rutherford, E., Millican, K., & Sifre, L. (2021). Improving Language Models by Retrieving from Trillions of Tokens. _arXiv preprint arXiv:2112.04426_. https://arxiv.org/abs/2112.04426 | Project: https://deepmind.com/research/publications/improving-language-models-retrieving-trillions-tokens
 
-Leveraging Passage Retrieval to Answer Open-Domain Questions. _arXiv preprint arXiv:2107.06373_.
+Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Riedel, S., & Schwenk, H. (2022). Atlas: Few-shot Learning with Retrieval Augmented Language Models. _arXiv preprint arXiv:2208.03299_. https://arxiv.org/abs/2208.03299 | GitHub: https://github.com/facebookresearch/atlas | Published in ICLR 2023
 
-- Izacard, G., & Grave, E. (2021). https://arxiv.org/abs/2107.06373
-- Published in EMNLP 2021
+Guu, K., Lee, K., Tung, Z., Pasupat, P., & Chang, M.-W. (2020). REALM: Retrieval-Augmented Language Model Pre-Training. arXiv preprint arXiv:2002.08909. https://arxiv.org/abs/2002.08909
 
-Improving Language Models by Retrieving from Trillions of Tokens. _arXiv preprint arXiv:2112.04426_.
-
-- Borgeaud, S., Mensch, A., Hoffmann, J., Cai, T., Rutherford, E., Millican, K., & Sifre, L. (2021). https://arxiv.org/abs/2112.04426
-- Project: https://deepmind.com/research/publications/improving-language-models-retrieving-trillions-tokens
-
-Atlas: Few-shot Learning with Retrieval Augmented Language Models. _arXiv preprint arXiv:2208.03299_.
-
-- Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Riedel, S., & Schwenk, H. (2022). https://arxiv.org/abs/2208.03299
-- GitHub: https://github.com/facebookresearch/atlas
-- Published in ICLR 2023
+Gao, L., Ma, X., Lin, J., & Callan, J. (2022). Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE). arXiv preprint arXiv:2212.10496. https://arxiv.org/abs/2212.10496
 
 ---
