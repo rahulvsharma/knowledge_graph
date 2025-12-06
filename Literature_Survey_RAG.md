@@ -36,7 +36,7 @@ When we looked into how modern neural RAG systems evolved, one pattern became cl
 
 Following the initial RAG framework, several refinements appeared. FiD (Izacard & Grave, 2021) introduced a more effective way to process multiple retrieved documents by encoding each one separately before combining the results. RETRO went a step further by integrating retrieval directly into the transformer architecture, rather than treating it as an external step. REALM (Guu et al., 2020) demonstrated that retrieval and language modeling could be learned together, grounding answers in factual sources. Later, Atlas (Izacard et al., 2022) showed that a retriever and generator could be jointly trained from scratch at scale, improving consistency across tasks.HyDE (Gao et al., 2023) introduced a clever idea where the model first generates a hypothetical answer and uses it as the retrieval query, improving search accuracy in RAG systems. Each of these models targeted a different limitation in earlier approaches.
 
-<img width="2226" height="454" alt="image" src="https://github.com/user-attachments/assets/1a79a566-0020-47d5-bf7a-c847ed4f2de6" />
+![RAG Table](/knowledge_graph/imgs/RAG_Table.jpeg)
 
 ## 3. Different Approaches to Retrieval
 
