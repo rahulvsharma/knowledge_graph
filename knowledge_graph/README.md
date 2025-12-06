@@ -73,22 +73,22 @@ Navigate to `http://localhost:8080` in your browser.
 ```
 knowledge_graph/
 ├── app/
-│   ├── __init__.py              # Flask application & API endpoints
-│   ├── knowledge_graph.py        # Graph logic using NetworkX
+│   ├── __init__.py                # Flask application & API endpoints
+│   ├── knowledge_graph.py         # Graph logic using NetworkX
 │   ├── templates/
-│   │   └── index.html           # Main web interface
+│   │   └── index.html             # Main web interface
 │   └── static/
 │       ├── css/
-│       │   └── style.css         # Styling
+│       │   └── style.css          # Styling
 │       └── js/
-│           └── app.js            # Frontend logic
+│           └── app.js             # Frontend logic
 ├── data/
-│   └── sample_ecommerce.csv      # Sample data for demo
+│   └── sample_ecommerce.csv       # Sample data for demo
 ├── docs/
-│   └── ENHANCEMENT_PLAN_PART_B.md       # Part B - Scalability improvements
-├── requirements.txt              # Python dependencies
-├── run.sh                        # Startup script
-└── README.md                     # This file
+│   └── ENHANCEMENT_PLAN_TASK_B.md # Task B - Scalability improvements
+├── requirements.txt               # Python dependencies
+├── run.sh                         # Startup script
+└── README.md                      # This file
 ```
 
 ---
