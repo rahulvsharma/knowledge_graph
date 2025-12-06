@@ -91,10 +91,10 @@ Then there's **end-to-end optimization**. Rather than training retrievers and ge
 
 **Examples (2023–2025):**
 
-**Adaptive retrieval:** CTRLA (ACL 2025), Reflective Tagging (Electronics 2024).
-**Hybrid dense + sparse retrieval:** HyDE, multi‑agent hybrid retriever (KDD 2025).
-**Multimodal RAG:** MMORE (2025), MIND‑RAG (ICCV Workshop 2025).
-**Long‑context LLMs + RAG:** GPT‑4‑style and Gemini‑style systems with large context windows.
+1. **Adaptive retrieval:** CTRLA (ACL 2025), Reflective Tagging (Electronics 2024).
+2. **Hybrid dense + sparse retrieval:** HyDE, multi‑agent hybrid retriever (KDD 2025).
+3. **Multimodal RAG:** MMORE (2025), MIND‑RAG (ICCV Workshop 2025).
+4. **Long‑context LLMs + RAG:** GPT‑4‑style and Gemini‑style systems with large context windows.
 
 ## 7. Comparison with Alternative Approaches
 
