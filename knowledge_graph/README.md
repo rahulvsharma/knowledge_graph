@@ -8,7 +8,7 @@
 2. Rahul Sharma (2024AA05893) Contribution 100%
 3. Sachit Pandey (2024AA05023) Contribution 100%
 4. Avishek Ghatak (2024AA05895) Contribution 100%
-5. Anoushka Guleria () Contribution 100%
+5. Anoushka Guleria (2023AA05527) Contribution 100%
 
 ## Overview
 
@@ -511,7 +511,7 @@ See `docs/ENHANCEMENT_PLAN.md` for:
 ### Documentation
 
 - API Docs: See "API Endpoints" section
-- Enhancement Plan: `docs/ENHANCEMENT_PLAN.md`
+- Enhancement Plan: `docs/ENHANCEMENT_PLAN_PART_B.md`
 - Sample Data: `data/sample_ecommerce.csv`
 
 ### Quick Help
