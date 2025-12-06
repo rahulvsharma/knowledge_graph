@@ -38,7 +38,6 @@ Following the initial RAG framework, several refinements appeared. FiD (Izacard 
 
 <img width="2226" height="454" alt="image" src="https://github.com/user-attachments/assets/1a79a566-0020-47d5-bf7a-c847ed4f2de6" />
 
-
 ## 3. Different Approaches to Retrieval
 
 When we looked into how retrieval actually works in RAG systems, we realised there are several ways models can search for information, and each one comes with its own pros and cons.
@@ -105,7 +104,7 @@ How does RAG stack up against other approaches?
 
 RAG differs fundamentally. Its knowledge is updated in a live way: i.e we change or add documents in the index instead of retraining the model’s weights. The cost is extra delay, because every user query has to run a retrieval step before the model answers.
 
-**In-context prompting** (enabled by huge context windows in recent models) is conceptually similar.  Instead of running a separate retrieval step,  all the potentially relevant material is put directly into the prompt. This is easier to set up and avoids some retrieval mistakes, but it wastes a lot of tokens and can overload the model with irrelevant text, which sometimes hurts answer quality.
+**In-context prompting** (enabled by huge context windows in recent models) is conceptually similar. Instead of running a separate retrieval step, all the potentially relevant material is put directly into the prompt. This is easier to set up and avoids some retrieval mistakes, but it wastes a lot of tokens and can overload the model with irrelevant text, which sometimes hurts answer quality.
 
 In practice, the right method depends on the use case. When the underlying knowledge changes frequently (news, pricing, policies), RAG is usually a better fit because you can update the document index without retraining the model. For occasional, one-off questions where slightly higher latency is acceptable, RAG is often more practical than running a full fine‑tuning pipeline. In narrow, specialized domains with relatively stable knowledge and some high‑quality labeled data, fine‑tuning a model on that domain can give stronger performance. Many real systems therefore combine these ideas like, using RAG for freshness and coverage, and fine‑tuning to adapt the model’s style, tools, or reasoning to a specific domain.
 
@@ -119,18 +118,29 @@ Its strengths are clear: answers can be grounded in explicit sources, knowledge 
 
 ## References
 
-Lewis, P., Perez, E., Piktus, A., Schwenk, H., Schwab, D., & Riedel, S. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. _Advances in Neural Information Processing Systems_, 33, 9459-9474. https://arxiv.org/abs/2005.11401
+Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. _Advances in Neural Information Processing Systems_,
 
-Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., & Schwenk, H. (2020). Dense Passage Retrieval for Open-Domain Question Answering. _arXiv preprint arXiv:2004.04906_. https://arxiv.org/abs/2004.04906 | GitHub: https://github.com/facebookresearch/DPR
+- Lewis, P., Perez, E., Piktus, A., Schwenk, H., Schwab, D., & Riedel, S. (2020). 33, 9459-9474. https://arxiv.org/abs/2005.11401
 
-Izacard, G., & Grave, E. (2021). Leveraging Passage Retrieval to Answer Open-Domain Questions. _arXiv preprint arXiv:2107.06373_. https://arxiv.org/abs/2107.06373 | Published in EMNLP 2021
+Dense Passage Retrieval for Open-Domain Question Answering. _arXiv preprint arXiv:2004.04906_.
 
-Borgeaud, S., Mensch, A., Hoffmann, J., Cai, T., Rutherford, E., Millican, K., & Sifre, L. (2021). Improving Language Models by Retrieving from Trillions of Tokens. _arXiv preprint arXiv:2112.04426_. https://arxiv.org/abs/2112.04426 | Project: https://deepmind.com/research/publications/improving-language-models-retrieving-trillions-tokens
+- Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., & Schwenk, H. (2020). https://arxiv.org/abs/2004.04906
+- GitHub: https://github.com/facebookresearch/DPR
 
-Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Riedel, S., & Schwenk, H. (2022). Atlas: Few-shot Learning with Retrieval Augmented Language Models. _arXiv preprint arXiv:2208.03299_. https://arxiv.org/abs/2208.03299 | GitHub: https://github.com/facebookresearch/atlas | Published in ICLR 2023
+Leveraging Passage Retrieval to Answer Open-Domain Questions. _arXiv preprint arXiv:2107.06373_.
 
-Guu, K., Lee, K., Tung, Z., Pasupat, P., & Chang, M.-W. (2020). REALM: Retrieval-Augmented Language Model Pre-Training. arXiv preprint arXiv:2002.08909. https://arxiv.org/abs/2002.08909
+- Izacard, G., & Grave, E. (2021). https://arxiv.org/abs/2107.06373
+- Published in EMNLP 2021
 
-Gao, L., Ma, X., Lin, J., & Callan, J. (2022). Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE). arXiv preprint arXiv:2212.10496. https://arxiv.org/abs/2212.10496
+Improving Language Models by Retrieving from Trillions of Tokens. _arXiv preprint arXiv:2112.04426_.
+
+- Borgeaud, S., Mensch, A., Hoffmann, J., Cai, T., Rutherford, E., Millican, K., & Sifre, L. (2021). https://arxiv.org/abs/2112.04426
+- Project: https://deepmind.com/research/publications/improving-language-models-retrieving-trillions-tokens
+
+Atlas: Few-shot Learning with Retrieval Augmented Language Models. _arXiv preprint arXiv:2208.03299_.
+
+- Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Riedel, S., & Schwenk, H. (2022). https://arxiv.org/abs/2208.03299
+- GitHub: https://github.com/facebookresearch/atlas
+- Published in ICLR 2023
 
 ---
