@@ -140,14 +140,29 @@ The advantages are clear. Answers ground in sources. Knowledge updates without r
 
 ## References
 
-Lewis, P., Perez, E., Piktus, A., Schwenk, H., Schwab, D., & Riedel, S. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. _Advances in Neural Information Processing Systems_, 33, 9459-9474. https://arxiv.org/abs/2005.11401
+Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. _Advances in Neural Information Processing Systems_,
 
-Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., & Schwenk, H. (2020). Dense Passage Retrieval for Open-Domain Question Answering. _arXiv preprint arXiv:2004.04906_. https://arxiv.org/abs/2004.04906 | GitHub: https://github.com/facebookresearch/DPR
+- Lewis, P., Perez, E., Piktus, A., Schwenk, H., Schwab, D., & Riedel, S. (2020). 33, 9459-9474. https://arxiv.org/abs/2005.11401
 
-Izacard, G., & Grave, E. (2021). Leveraging Passage Retrieval to Answer Open-Domain Questions. _arXiv preprint arXiv:2107.06373_. https://arxiv.org/abs/2107.06373 | Published in EMNLP 2021
+Dense Passage Retrieval for Open-Domain Question Answering. _arXiv preprint arXiv:2004.04906_.
 
-Borgeaud, S., Mensch, A., Hoffmann, J., Cai, T., Rutherford, E., Millican, K., & Sifre, L. (2021). Improving Language Models by Retrieving from Trillions of Tokens. _arXiv preprint arXiv:2112.04426_. https://arxiv.org/abs/2112.04426 | Project: https://deepmind.com/research/publications/improving-language-models-retrieving-trillions-tokens
+- Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., & Schwenk, H. (2020). https://arxiv.org/abs/2004.04906
+- GitHub: https://github.com/facebookresearch/DPR
 
-Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Riedel, S., & Schwenk, H. (2022). Atlas: Few-shot Learning with Retrieval Augmented Language Models. _arXiv preprint arXiv:2208.03299_. https://arxiv.org/abs/2208.03299 | GitHub: https://github.com/facebookresearch/atlas | Published in ICLR 2023
+Leveraging Passage Retrieval to Answer Open-Domain Questions. _arXiv preprint arXiv:2107.06373_.
+
+- Izacard, G., & Grave, E. (2021). https://arxiv.org/abs/2107.06373
+- Published in EMNLP 2021
+
+Improving Language Models by Retrieving from Trillions of Tokens. _arXiv preprint arXiv:2112.04426_.
+
+- Borgeaud, S., Mensch, A., Hoffmann, J., Cai, T., Rutherford, E., Millican, K., & Sifre, L. (2021). https://arxiv.org/abs/2112.04426
+- Project: https://deepmind.com/research/publications/improving-language-models-retrieving-trillions-tokens
+
+Atlas: Few-shot Learning with Retrieval Augmented Language Models. _arXiv preprint arXiv:2208.03299_.
+
+- Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Riedel, S., & Schwenk, H. (2022). https://arxiv.org/abs/2208.03299
+- GitHub: https://github.com/facebookresearch/atlas
+- Published in ICLR 2023
 
 ---
