@@ -18,13 +18,13 @@ Built with Flask backend, NetworkX graph processing, and D3.js visualization.
 
 **Features:**
 
-- ✨ Interactive web interface for adding relationships
-- 📊 Real-time graph visualization with D3.js
-- 📁 CSV bulk import for datasets
-- 🔍 Advanced querying (neighbors, paths, relationship search)
-- 📈 Graph statistics and analytics
-- 💾 Export functionality (JSON)
-- 🚀 Single-command startup
+- Interactive web interface for adding relationships
+- Real-time graph visualization with D3.js
+- CSV bulk import for datasets
+- Advanced querying (neighbors, paths, relationship search)
+- Graph statistics and analytics
+- Export functionality (JSON)
+- Single-command startup
 
 ---
 
@@ -85,7 +85,7 @@ knowledge_graph/
 ├── data/
 │   └── sample_ecommerce.csv      # Sample data for demo
 ├── docs/
-│   └── ENHANCEMENT_PLAN.md       # Part B - Scalability improvements
+│   └── ENHANCEMENT_PLAN_PART_B.md       # Part B - Scalability improvements
 ├── requirements.txt              # Python dependencies
 ├── run.sh                        # Startup script
 └── README.md                     # This file
@@ -426,15 +426,6 @@ Electronics
 │   └── Android
 ```
 
-### Use Case 5: Influencer Identification
-
-Query: Find most connected sellers/reviewers
-
-```
-Calculate degree centrality
-Identify top reviewers, sellers, categories
-```
-
 ---
 
 ## Sample Data
@@ -477,32 +468,6 @@ The graph will populate with example E-Commerce relationships.
 - **REST API** for backend communication
 - **JSON** for data interchange
 - **Directed Graph** data structure
-
----
-
-## Performance Characteristics
-
-### Current Implementation
-
-- **Maximum dataset:** ~100,000 relationships
-- **Query response time:** 50-500ms
-- **Supported concurrent users:** 10-20
-- **Memory usage:** ~1GB for 100K relationships
-
-### Limitations
-
-- Single-threaded processing
-- All data in memory
-- No persistence across restarts
-
-### For Large-Scale Deployments
-
-See `docs/ENHANCEMENT_PLAN.md` for:
-
-- Database optimization (Neo4j)
-- Distributed processing
-- Caching strategies
-- Multi-server architecture
 
 ---
 
