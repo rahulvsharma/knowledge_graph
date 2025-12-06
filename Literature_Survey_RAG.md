@@ -143,4 +143,12 @@ Atlas: Few-shot Learning with Retrieval Augmented Language Models. _arXiv prepri
 - GitHub: https://github.com/facebookresearch/atlas
 - Published in ICLR 2023
 
+REALM: Retrieval-Augmented Language Model Pre-Training. arXiv preprint arXiv:2002.08909.
+
+- Guu, K., Lee, K., Tung, Z., Pasupat, P., & Chang, M.-W. (2020). https://arxiv.org/abs/2002.08909
+
+Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE). arXiv preprint arXiv:2212.10496.
+
+- Gao, L., Ma, X., Lin, J., & Callan, J. (2022). https://arxiv.org/abs/2212.10496
+
 ---
